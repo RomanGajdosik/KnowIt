@@ -8,8 +8,8 @@ app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 
 @app.route('/')
-def home():
-    return "Welcome to the Flask App!"
+def index():
+     return render_template('index.html')
 
 
 if __name__ == '__main__':
