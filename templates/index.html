@@ -96,28 +96,47 @@
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
                         <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#register">Register</a>
+                            <a class="nav-link btn btn-purple w-100" href="/register">Register</a>
                         </li>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#login">Login</a>
-                        </li>
+                        {% if current_user.is_authenticated %}
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="#add-content">Add Content</a>
                         </li>
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="#view-content">View Content</a>
                         </li>
+                        {% if current_user.role == 'admin' %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/admin">Admin Panel</a>
+                        </li>
+                        {% endif %}
+                        <li class="nav-item mb-2">
+                            <form method="POST" action="/logout">
+                                <button type="submit" class="nav-link btn btn-purple w-100">Logout</button>
+                            </form>
+                        </li>
+                        {% else %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/login">Login</a>
+                        </li>
+                        {% endif %}                
                     </ul>
                 </div>
             </nav>
             <!-- Main section -->
             <main class="col-md-10 ms-sm-auto px-4 py-5">
+                {% block content %}
                 <div class="row mb-4">
                     <div class="col text-center">
-                        <h1 class="display-4" style="color:#04010a;">Welcome to KnowIt</h1>
-                        <p class="lead">A platform to learn, share, and grow. Register, login, or add your own content!</p>
+                        {% if current_user.is_authenticated %}
+                            <h1 class="display-4" style="color:#04010a;">Welcome {{ current_user.username }}</h1>
+                        {% else %}
+                            <h1 class="display-4" style="color:#04010a;">Welcome to KnowIt</h1>
+                            <p class="lead">A platform to learn, share, and grow. Register/Login and add your own learning content!</p>
+                        {% endif %}
                     </div>
                 </div>
+                {% endblock %}
             </main>
         </div>
     </div>
