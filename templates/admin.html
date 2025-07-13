@@ -7,34 +7,115 @@
             <div class="card p-4">
                 <h2 class="mb-4 text-center" style="color:#ae0054;">Admin Dashboard</h2>
                 <h4 class="mb-3">Manage Users</h4>
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                            <th>Created At</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for user in users %}
-                        <tr>
-                            <td>{{ user.id }}</td>
-                            <td>{{ user.username }}</td>
-                            <td>{{ user.email }}</td>
-                            <td>{{ user.created_at }}</td>
-                            <td>
-                                <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                <form method="POST" action="/admin/set_roles">
+                <div class="d-none d-md-block table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Created At</th>
+                                <th>Admin</th>
+                                <th>Teacher</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for user in users %}
+                            <tr>
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.username }}</td>
+                                <td>{{ user.email }}</td>
+                                <td>{{ user.created_at }}</td>
+                                <td>
+                                    <input type="checkbox" name="admin_{{ user.id }}" value="admin" {% if user.role == 'admin' %}checked{% endif %}>
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="teacher_{{ user.id }}" value="teacher" {% if user.role == 'teacher' %}checked{% endif %}>
+                                </td>
+                                <td>
+                                    <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-block d-md-none">
+                    {% for user in users %}
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ user.username }} <span class="text-muted">#{{ user.id }}</span></h5>
+                            <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
+                            <p class="mb-1"><strong>Created At:</strong> {{ user.created_at }}</p>
+                            <div class="mb-2">
+                                <input type="checkbox" name="admin_{{ user.id }}" value="admin" {% if user.role == 'admin' %}checked{% endif %}>Admin
+                                <input type="checkbox" name="teacher_{{ user.id }}" value="teacher" {% if user.role == 'teacher' %}checked{% endif %}>Teacher
+                            </div>
+                            <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <button type="submit" class="btn btn-success mt-3" id="saveRolesBtn">Save Roles</button>
+                </form>
+                <!-- Modal -->
+                <div class="modal fade" id="rolesModal" tabindex="-1" aria-labelledby="rolesModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="rolesModalLabel">Roles Updated</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        {{ roles_info|safe }}
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if show_roles_modal %}
+                <script>
+                  var rolesModal = new bootstrap.Modal(document.getElementById('rolesModal'));
+                  rolesModal.show();
+                </script>
+                {% endif %}
                 <h4 class="mb-3 mt-5">Manage Content</h4>
-                <p>Content management features go here.</p>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Author</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for content in contents %}
+                            <tr>
+                                <td>{{ content.id }}</td>
+                                <td>{{ content.title }}</td>
+                                <td>{{ content.author }}</td>
+                                <td>{{ content.created_at }}</td>
+                                <td>
+                                    <form method="POST" action="/admin/delete_content/{{ content.id }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
