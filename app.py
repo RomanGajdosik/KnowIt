@@ -4,7 +4,7 @@ from flask_login import LoginManager, login_user, logout_user,UserMixin,current_
 from flask_bcrypt import Bcrypt
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://u4tzta1s5zsm2y0zttlz:@b0hooldw2cdg4khzlgeq-postgresql.services.clever-cloud.com:50013/b0hooldw2cdg4khzlgeq'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://u4tzta1s5zsm2y0zttlz:!!!!!!@b0hooldw2cdg4khzlgeq-postgresql.services.clever-cloud.com:50013/b0hooldw2cdg4khzlgeq'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
@@ -45,7 +45,8 @@ def register():
             new_user = Users(username=username, email=email, password_hash=hashed_password, created_at=db.func.current_timestamp())
             db.session.add(new_user)
             db.session.commit()
-            return redirect('/')
+            login_user(new_user)
+            return redirect(url_for('index', username=new_user.username))
     return render_template('register.html', error=error, show_modal=show_modal)
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,12 +77,12 @@ def admin():
         return redirect(url_for('index'))
     users = Users.query.all()
     # Fetch contents for content management table
-    try:
-        from models.contentDB import Content
-        contents = Content.query.all()
-    except Exception:
-        contents = []
-    return render_template('admin.html', users=users, contents=contents)
+    # try:
+    #     from models.contentDB import Content
+    #     contents = Content.query.all()
+    # except Exception:
+    #     contents = []
+    return render_template('admin.html', users=users)
 
 # Delete user route
 @app.route('/admin/delete_user/<int:user_id>', methods=['POST'])
@@ -101,30 +102,16 @@ def delete_user(user_id):
 @login_required
 def set_roles():
     if current_user.role != 'admin':
-        return redirect(url_for('index'))
-    users = Users.query.all()
-    info_lines = []
-    for user in users:
-        prev_role = user.role
-        admin_checked = request.form.get(f'admin_{user.id}')
-        teacher_checked = request.form.get(f'teacher_{user.id}')
-        if admin_checked:
-            user.role = 'admin'
-        elif teacher_checked:
-            user.role = 'teacher'
-        else:
-            user.role = 'student'
-        if user.role != prev_role:
-            info_lines.append(f"User <strong>{user.username}</strong> set to <strong>{user.role}</strong>.")
-    db.session.commit()
-    roles_info = '<br>'.join(info_lines) if info_lines else 'No changes made.'
-    # Fetch contents for content management table
-    try:
-        from models.contentDB import Content
-        contents = Content.query.all()
-    except Exception:
-        contents = []
-    return render_template('admin.html', users=users, contents=contents, show_roles_modal=True, roles_info=roles_info)
+        return redirect(url_for('index'))    
+    user_id = request.form.get('user_id')
+    role = request.form.get('role')
+    user = Users.query.get(user_id)
+    print(f"Setting role for user {user_id} to {role}")
+    if user:
+        user.role = role
+        db.session.commit()   
+    print('here i am')
+    return redirect(url_for('admin'))
 
 if __name__ == '__main__':
     app.run()
