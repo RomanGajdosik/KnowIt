@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h2 class="mb-4 text-center" style="color:#ae0054;">Login</h2>
+                <form method="POST" action="/login">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password_hash" name="password_hash" required>
+                    </div>
+                    <button type="submit" class="btn btn-purple w-100">Login</button>
+                </form>
+                <!-- Error Modal -->
+                {% if show_modal and error %}
+                <div class="modal fade show" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-modal="true" role="dialog" style="display:block; background:rgba(0,0,0,0.5);">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="errorModalLabel">Login Error</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert alert-danger mb-0">{{ error }}</div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function closeModal() {
+                        document.getElementById('errorModal').style.display = 'none';
+                    }
+                </script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
