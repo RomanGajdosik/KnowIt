@@ -1,2 +1,6 @@
 .venv/
 __pycache__/app.cpython-312.pyc
+instance/site.db
+models/__pycache__/__init__.cpython-312.pyc
+models/__pycache__/users.cpython-312.pyc
+models/__pycache__/usersDB.cpython-312.pyc
