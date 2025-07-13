@@ -40,18 +40,60 @@
         </div>
     </nav>
 
-    <!-- Sidebar -->
+    <!-- Hamburger menu for small screens -->
     <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebarMenu" aria-labelledby="sidebarMenuLabel">
-        <div class="offcanvas-header" style="background-color: #6f42c1;">
+        <div class="offcanvas-header" style="background-color: #ae0054;">
             <h5 class="offcanvas-title text-white" id="sidebarMenuLabel">Menu</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body p-0">
             <div class="p-3">
+                {% if current_user.role == "admin" %}
+                <div class="mb-3" id="admin">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:#ae0054;">Admin control panel</h5>
+                            <p>Administrate the users,content etc. .</p>
+                            <a href="/admin" class="btn btn-purple w-100">admin</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                {% if current_user.role == 'teacher' or current_user.role =='admin' %}
+                <div class="mb-3" id="add-content">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:#ae0054;">Add Content</h5>
+                            <p>Share your knowledge by adding new learning materials.</p>
+                            <a href="/add-content" class="btn btn-purple w-100">Add Content</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}               
+                {% if current_user.is_authenticated %}
+                <div class="mb-3" id="view-content">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:#ae0054;">View Content</h5>
+                            <p>View available learning materials.</p>
+                            <a href="/add-content" class="btn btn-purple w-100">View Content</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3" id="logout">
+                    <div class="card shadow-sm">
+                        <div class="card-body">                            
+                            <form method="POST" action="/logout">
+                                <button type="submit" class="btn btn-purple w-100">Logout</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>                
+                {% else %}
                 <div class="mb-3" id="register">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title" style="color:#6f42c1;">Register</h5>
+                            <h5 class="card-title" style="color:#ae0054;">Register</h5>
                             <p>Create an account to start learning and sharing content.</p>
                             <a href="/register" class="btn btn-purple w-100">Register</a>
                         </div>
@@ -60,30 +102,13 @@
                 <div class="mb-3" id="login">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title" style="color:#6f42c1;">Login</h5>
+                            <h5 class="card-title" style="color:#ae0054;">Login</h5>
                             <p>Access your account and continue your learning journey.</p>
                             <a href="/login" class="btn btn-purple w-100">Login</a>
                         </div>
                     </div>
                 </div>
-                <div class="mb-3" id="add-content">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color:#6f42c1;">Add Content</h5>
-                            <p>Share your knowledge by adding new learning materials.</p>
-                            <a href="/add-content" class="btn btn-purple w-100">Add Content</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-3" id="add-content">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title" style="color:#6f42c1;">View Content</h5>
-                            <p>View available learning materials.</p>
-                            <a href="/add-content" class="btn btn-purple w-100">View Content</a>
-                        </div>
-                    </div>
-                </div>
+                {% endif %}               
             </div>
         </div>
     </div>
@@ -95,27 +120,29 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="min-height: 100vh; background-color: #f3e6ff;">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="/register">Register</a>
-                        </li>
-                        {% if current_user.is_authenticated %}
-                        <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#add-content">Add Content</a>
-                        </li>
-                        <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#view-content">View Content</a>
-                        </li>
                         {% if current_user.role == 'admin' %}
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="/admin">Admin Panel</a>
                         </li>
                         {% endif %}
+                        {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="#add-content">Add Content</a>
+                        </li>
+                        {% endif %}
+                        {% if current_user.is_authenticated %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="#view-content">View Content</a>
+                        </li>                 
                         <li class="nav-item mb-2">
                             <form method="POST" action="/logout">
                                 <button type="submit" class="nav-link btn btn-purple w-100">Logout</button>
                             </form>
                         </li>
                         {% else %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/register">Register</a>
+                        </li> 
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="/login">Login</a>
                         </li>
@@ -129,7 +156,7 @@
                 <div class="row mb-4">
                     <div class="col text-center">
                         {% if current_user.is_authenticated %}
-                            <h1 class="display-4" style="color:#04010a;">Welcome {{ current_user.username }}</h1>
+                            <h1 class="display-4" style="color:#04010a;">Welcome {{ current_user.username|capitalize }}</h1>
                         {% else %}
                             <h1 class="display-4" style="color:#04010a;">Welcome to KnowIt</h1>
                             <p class="lead">A platform to learn, share, and grow. Register/Login and add your own learning content!</p>
