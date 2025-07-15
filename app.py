@@ -2,14 +2,19 @@ from flask import Flask, request, render_template,redirect,url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user,UserMixin,current_user,login_required 
 from flask_bcrypt import Bcrypt
+import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://u4tzta1s5zsm2y0zttlz:!!!!!!@b0hooldw2cdg4khzlgeq-postgresql.services.clever-cloud.com:50013/b0hooldw2cdg4khzlgeq'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_ECHO'] = True
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
-app.secret_key='topmost_secret_key'
+app.secret_key = os.getenv('SECRET_KEY')
 
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -33,8 +38,10 @@ def register():
     error = None
     show_modal = False
     if request.method == 'POST':
+        fullName = request.form['fullName']
         username = request.form['username']
         email = request.form['email']
+        phoneNumber = request.form['phone_number']
         password = request.form['password_hash']
         hashed_password = bcrypt.generate_password_hash(password).decode('utf-8')
         existing_user = Users.query.filter((Users.username == username) | (Users.email == email)).first()
@@ -42,7 +49,7 @@ def register():
             error = 'Username or email already exists. Please choose another.'
             show_modal = True
         else:
-            new_user = Users(username=username, email=email, password_hash=hashed_password, created_at=db.func.current_timestamp())
+            new_user = Users(fullname=fullName, username=username, email=email,phone_number=phoneNumber, password_hash=hashed_password, created_at=db.func.current_timestamp())
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
