@@ -3,8 +3,10 @@ from app import db
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    fullname = db.Column(db.String(150), nullable=False, unique=True) 
     username = db.Column(db.String(150), unique=True, nullable=False)
     email = db.Column(db.String(150), unique=True, nullable=False)
+    phone_number = db.Column(db.String(50), nullable=True,unique=True)
     password_hash = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
     role = db.Column(db.String(50), default='student')  # Default role is 'user'

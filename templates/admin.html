@@ -12,8 +12,10 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>FullName</th>
                                 <th>Username</th>
                                 <th>Email</th>
+                                <th>PhoneNum.</th>
                                 <th>Created At</th>                                
                                 <th>Actions</th>
                             </tr>
@@ -22,8 +24,10 @@
                             {% for user in users %}
                             <tr>
                                 <td>{{ user.id }}</td>
+                                <td>{{ user.fullname }}</td>
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
+                                <td>{{ user.phone_number }}</td>
                                 <td>{{ user.created_at }}</td>                                
                                 <td>
                                     <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
@@ -40,6 +44,8 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">{{ user.username }} <span class="text-muted">#{{ user.id }}</span></h5>
+                            <p class="mb-1"><strong>FullName:</strong> {{ user.fullname }}</p>
+                            <p class="mb-1"><strong>PhoneN.:</strong> {{ user.phone_number }}</p>
                             <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
                             <p class="mb-1"><strong>Created At:</strong> {{ user.created_at }}</p>                            
                             <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
