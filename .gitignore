@@ -5,3 +5,4 @@ models/__pycache__/__init__.cpython-312.pyc
 models/__pycache__/users.cpython-312.pyc
 models/__pycache__/usersDB.cpython-312.pyc
 .env
+models/__pycache__/coursesDB.cpython-312.pyc
