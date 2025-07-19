@@ -1,0 +1,125 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 style="color:#ae0054;">Browse Available Courses</h2>
+                <a href="{{ url_for('my_courses') }}" class="btn btn-secondary">
+                    <i class="fas fa-user-graduate"></i> My Enrolled Courses
+                </a>
+            </div>
+            
+            {% if courses %}
+                <!-- Desktop View -->
+                <div class="d-none d-md-block">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>Course Title</th>
+                                    <th>Description</th>
+                                    <th>Created By</th>
+                                    <th>Created Date</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for course in courses %}
+                                <tr>
+                                    <td><strong>{{ course.title }}</strong></td>
+                                    <td>{{ course.description[:100] + '...' if course.description and course.description|length > 100 else course.description or 'No description' }}</td>
+                                    <td>{{ course.created_by_user.fullname or course.created_by_user.username }}</td>
+                                    <td>{{ course.created_at.strftime('%m/%d/%Y') }}</td>
+                                    <td>
+                                        {% if course.id in enrolled_course_ids %}
+                                            <span class="badge bg-success">Enrolled</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Available</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a href="{{ url_for('view_course', course_id=course.id) }}" class="btn btn-info btn-sm">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                            {% if current_user.role == 'student' %}
+                                                {% if course.id in enrolled_course_ids %}
+                                                    <form method="POST" action="{{ url_for('unenroll_course', course_id=course.id) }}" style="display:inline;">
+                                                        <button type="submit" class="btn btn-warning btn-sm">
+                                                            <i class="fas fa-user-minus"></i> Unenroll
+                                                        </button>
+                                                    </form>
+                                                {% else %}
+                                                    <form method="POST" action="{{ url_for('enroll_course', course_id=course.id) }}" style="display:inline;">
+                                                        <button type="submit" class="btn btn-success btn-sm">
+                                                            <i class="fas fa-user-plus"></i> Enroll
+                                                        </button>
+                                                    </form>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Mobile View -->
+                <div class="d-block d-md-none">
+                    {% for course in courses %}
+                    <div class="card mb-3">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="mb-0" style="color:#ae0054;">{{ course.title }}</h6>
+                            {% if course.id in enrolled_course_ids %}
+                                <span class="badge bg-success">Enrolled</span>
+                            {% else %}
+                                <span class="badge bg-secondary">Available</span>
+                            {% endif %}
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <small class="text-muted">By: {{ course.created_by_user.fullname or course.created_by_user.username }}</small><br>
+                                <small class="text-muted">Created: {{ course.created_at.strftime('%m/%d/%Y') }}</small>
+                            </p>
+                            {% if course.description %}
+                            <p class="card-text">{{ course.description[:100] + '...' if course.description|length > 100 else course.description }}</p>
+                            {% endif %}
+                            <div class="d-flex gap-2">
+                                <a href="{{ url_for('view_course', course_id=course.id) }}" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> View
+                                </a>
+                                {% if current_user.role == 'student' %}
+                                    {% if course.id in enrolled_course_ids %}
+                                        <form method="POST" action="{{ url_for('unenroll_course', course_id=course.id) }}" style="display:inline;">
+                                            <button type="submit" class="btn btn-warning btn-sm">
+                                                <i class="fas fa-user-minus"></i> Unenroll
+                                            </button>
+                                        </form>
+                                    {% else %}
+                                        <form method="POST" action="{{ url_for('enroll_course', course_id=course.id) }}" style="display:inline;">
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="fas fa-user-plus"></i> Enroll
+                                            </button>
+                                        </form>
+                                    {% endif %}
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info text-center">
+                    <h5>No courses available</h5>
+                    <p>There are currently no courses created by teachers or administrators.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

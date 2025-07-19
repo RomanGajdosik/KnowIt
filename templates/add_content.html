@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-4">
+                <h2 class="mb-4 text-center" style="color:#ae0054;">Add New Course</h2>
+                <form method="POST" action="/add-content">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Course Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required maxlength="150" placeholder="Enter course title">
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Course Description</label>
+                        <textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter course description (optional)"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="content" class="form-label">Course Content</label>
+                        <textarea class="form-control" id="content" name="content" rows="10" required placeholder="Enter the course content here..."></textarea>
+                        <div class="form-text">This is the main content of your course.</div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
+                        <button type="submit" class="btn btn-success">Create Course</button>
+                    </div>
+                </form>
+                
+                <!-- Success/Error Modal -->
+                {% if show_modal and message %}
+                <div class="modal fade show" id="messageModal" tabindex="-1" aria-labelledby="messageModalLabel" aria-modal="true" role="dialog" style="display:block; background:rgba(0,0,0,0.5);">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="messageModalLabel">
+                                    {% if error %}Course Creation Error{% else %}Success{% endif %}
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal()"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="alert {% if error %}alert-danger{% else %}alert-success{% endif %} mb-0">
+                                    {{ message }}
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal()">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    function closeModal() {
+                        document.getElementById('messageModal').style.display = 'none';
+                    }
+                </script>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

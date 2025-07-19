@@ -59,7 +59,7 @@
                     </div>
                 </div>
                 {% endif %}
-                {% if current_user.role == 'teacher' or current_user.role =='admin' %}
+                <!-- {% if current_user.role == 'teacher' or current_user.role =='admin' %}
                 <div class="mb-3" id="add-content">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -69,22 +69,42 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}               
+                {% endif %}                -->
                 {% if current_user.is_authenticated %}
-                <div class="mb-3" id="view-content">
+                {% if current_user.role == 'student' %}
+                <div class="mb-3" id="browse-courses">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <h5 class="card-title" style="color:#ae0054;">View Content</h5>
-                            <p>View available learning materials.</p>
-                            <a href="/add-content" class="btn btn-purple w-100">View Content</a>
+                            <h5 class="card-title" style="color:#ae0054;">Browse Courses</h5>
+                            <p>Discover and enroll in available courses.</p>
+                            <a href="/browse-courses" class="btn btn-purple w-100">Browse Courses</a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                <div class="mb-3" id="my-courses">
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title" style="color:#ae0054;">
+                                {% if current_user.role == 'student' %}My Enrolled Courses{% else %}My Courses{% endif %}
+                            </h5>
+                            <p>
+                                {% if current_user.role == 'student' %}View courses you're enrolled in.{% else %}View and manage your created courses.{% endif %}
+                            </p>
+                            <a href="/my-courses" class="btn btn-purple w-100">
+                                {% if current_user.role == 'student' %}My Enrolled Courses{% else %}My Courses{% endif %}
+                            </a>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3" id="logout">
                     <div class="card shadow-sm">
                         <div class="card-body">                            
-                            <form method="POST" action="/logout">
+                            <form method="POST" action="/logout">                                
                                 <button type="submit" class="btn btn-purple w-100">Logout</button>
+                                <p class="text-center mb-2" style="color:#ae0054; font-weight:bold; text-shadow:2px 2px 4px #888;">
+                                     Logged as {{ current_user.username|capitalize }}
+                                </p>
                             </form>
                         </div>
                     </div>
@@ -125,18 +145,28 @@
                             <a class="nav-link btn btn-purple w-100" href="/admin">Admin Panel</a>
                         </li>
                         {% endif %}
-                        {% if current_user.role == 'teacher' or current_user.role == 'admin' %}
+                        <!-- {% if current_user.role == 'teacher' %}
                         <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#add-content">Add Content</a>
+                            <a class="nav-link btn btn-purple w-100" href="/add-content">Add Content</a>
+                        </li>
+                        {% endif %} -->
+                        {% if current_user.is_authenticated %}
+                        {% if current_user.role == 'student' %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/browse-courses">Browse Courses</a>
                         </li>
                         {% endif %}
-                        {% if current_user.is_authenticated %}
                         <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="#view-content">View Content</a>
+                            <a class="nav-link btn btn-purple w-100" href="/my-courses">
+                                {% if current_user.role == 'student' %}My Enrolled Courses{% else %}My Courses{% endif %}
+                            </a>
                         </li>                 
                         <li class="nav-item mb-2">
-                            <form method="POST" action="/logout">
+                            <form method="POST" action="/logout">                                
                                 <button type="submit" class="nav-link btn btn-purple w-100">Logout</button>
+                                <p class="text-center mb-2" style="color:#ae0054; font-weight:bold; text-shadow:2px 2px 4px #888;">
+                                    Logged as {{ current_user.username|capitalize }}
+                                </p>
                             </form>
                         </li>
                         {% else %}
@@ -157,6 +187,24 @@
                     <div class="col text-center">
                         {% if current_user.is_authenticated %}
                             <h1 class="display-4" style="color:#04010a;">Welcome {{ current_user.username|capitalize }}</h1>
+                            {% if courses %}
+                                <h2 class="mb-4" style="color:#ae0054;">Your Courses</h2>
+                                <div class="row justify-content-center">
+                                    {% for course in courses %}
+                                    <div class="col-md-6 col-lg-4 mb-4">
+                                        <div class="card shadow-sm h-100">
+                                            <div class="card-body d-flex flex-column">
+                                                <h5 class="card-title" style="color:#5a379e;">{{ course.title }}</h5>
+                                                <p class="card-text flex-grow-1">{{ course.description }}</p>
+                                                <a href="/courses/{{ course.id }}" class="btn btn-purple mt-2">Go to Course</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                <p class="lead">No courses available for you yet.</p>
+                            {% endif %}
                         {% else %}
                             <h1 class="display-4" style="color:#04010a;">Welcome to KnowIt</h1>
                             <p class="lead">A platform to learn, share, and grow. Register/Login and add your own learning content!</p>
