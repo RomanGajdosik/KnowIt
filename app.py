@@ -1,9 +1,10 @@
-from flask import Flask, request, render_template,redirect,url_for
+from flask import Flask, request, render_template,redirect,url_for, session, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user,UserMixin,current_user,login_required 
 from flask_bcrypt import Bcrypt
 import os
 from dotenv import load_dotenv
+from utils.timezone_utils import COMMON_TIMEZONES, set_user_timezone, get_user_timezone
 
 # Load environment variables from .env file
 load_dotenv()
@@ -21,7 +22,7 @@ login_manager.login_view = 'login'
 
 from models.usersDB import Users
 from models.coursesDB import Courses, student_enrollments
-
+from utils.timezone_utils import format_datetime_for_user
 
 # Make Users model compatible with Flask-Login
 class UserLogin(Users, UserMixin):
@@ -30,6 +31,14 @@ class UserLogin(Users, UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(int(user_id))
+
+# Template filter for timezone conversion
+@app.template_filter('user_timezone')
+def user_timezone_filter(utc_datetime, format_string='%B %d, %Y at %I:%M %p'):
+    user_tz = get_user_timezone()
+    if current_user.is_authenticated and hasattr(current_user, 'timezone'):
+        user_tz = current_user.timezone or 'UTC'
+    return format_datetime_for_user(utc_datetime, user_tz, format_string)
 
 @app.route('/')
 def index():
@@ -350,6 +359,18 @@ def unenroll_course(course_id):
 @app.route('/faq')
 def faq():
     return render_template('faq.html')
+
+@app.route('/set-timezone', methods=['POST'])
+def set_timezone():
+    timezone = request.form.get('timezone', 'UTC')
+    set_user_timezone(timezone)
+    
+    # If user is logged in, save to database
+    if current_user.is_authenticated:
+        current_user.timezone = timezone
+        db.session.commit()
+    
+    return redirect(request.referrer or url_for('index'))
 
 if __name__ == '__main__':
     app.run()

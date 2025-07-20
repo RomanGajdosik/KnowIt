@@ -53,8 +53,8 @@
                                             {% endif %}
                                         </td>
                                         {% if not is_student %}
-                                        <td>{{ course.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
-                                        <td>{{ course.updated_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ course.created_at | user_timezone('%Y-%m-%d %H:%M') }}</td>
+                                        <td>{{ course.updated_at | user_timezone('%Y-%m-%d %H:%M') }}</td>
                                         <td>
                                             <span class="badge bg-info">{{ course.enrolled_students|length }}</span>
                                             {% if course.enrolled_students|length > 0 %}
@@ -115,8 +115,8 @@
                                 <p class="card-text">
                                     <small class="text-muted">
                                         {% if not is_student %}
-                                        Created: {{ course.created_at.strftime('%Y-%m-%d %H:%M') }}<br>
-                                        Updated: {{ course.updated_at.strftime('%Y-%m-%d %H:%M') }}<br>
+                                        Created: {{ course.created_at | user_timezone('%Y-%m-%d %H:%M') }}<br>
+                                        Updated: {{ course.updated_at | user_timezone('%Y-%m-%d %H:%M') }}<br>
                                         <span class="badge bg-info">{{ course.enrolled_students|length }}</span> 
                                         {% if course.enrolled_students|length == 1 %}student enrolled{% else %}students enrolled{% endif %}
                                         {% else %}

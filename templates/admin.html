@@ -28,7 +28,7 @@
                                 <td>{{ user.username }}</td>
                                 <td>{{ user.email }}</td>
                                 <td>{{ user.phone_number }}</td>
-                                <td>{{ user.created_at }}</td>                                
+                                <td>{{ user.created_at | user_timezone('%Y-%m-%d %H:%M') }}</td>                                
                                 <td>
                                     <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
@@ -47,7 +47,7 @@
                             <p class="mb-1"><strong>FullName:</strong> {{ user.fullname }}</p>
                             <p class="mb-1"><strong>PhoneN.:</strong> {{ user.phone_number }}</p>
                             <p class="mb-1"><strong>Email:</strong> {{ user.email }}</p>
-                            <p class="mb-1"><strong>Created At:</strong> {{ user.created_at }}</p>                            
+                            <p class="mb-1"><strong>Created At:</strong> {{ user.created_at | user_timezone('%Y-%m-%d %H:%M') }}</p>                            
                             <form method="POST" action="/admin/delete_user/{{ user.id }}" style="display:inline;">
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
                             </form>
@@ -112,7 +112,7 @@
                                 <td>{{ content.id }}</td>
                                 <td>{{ content.title }}</td>
                                 <td>{{ content.created_by.fullname or content.created_by_user.username }}</td>
-                                <td>{{ content.created_at }}</td>
+                                <td>{{ content.created_at | user_timezone('%Y-%m-%d %H:%M') }}</td>
                                 <td>
                                     <form method="GET" action="/edit-course/{{ content.id }}" style="display:inline;">
                                         <button type="submit" class="btn btn-primary btn-sm">Edit</button>

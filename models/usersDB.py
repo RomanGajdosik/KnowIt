@@ -1,5 +1,5 @@
 from app import db
-
+from datetime import datetime
 
 class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -8,8 +8,9 @@ class Users(db.Model):
     email = db.Column(db.String(150), unique=True, nullable=False)
     phone_number = db.Column(db.String(50), nullable=True,unique=True)
     password_hash = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=db.func.current_timestamp())
-    role = db.Column(db.String(50), default='student')  # Default role is 'user'
+    created_at = db.Column(db.DateTime, default=lambda: datetime.utcnow())
+    role = db.Column(db.String(50), default='student')  # Default role is 'student'
+    timezone = db.Column(db.String(50), default='UTC')  # User's preferred timezone
 
     # Flask-Login required methods
     @property

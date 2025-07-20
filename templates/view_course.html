@@ -70,11 +70,11 @@
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <h6 class="text-muted">Created At</h6>
-                        <p>{{ course.created_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                        <p>{{ course.created_at | user_timezone }}</p>
                     </div>
                     <div class="col-md-6">
                         <h6 class="text-muted">Last Updated</h6>
-                        <p>{{ course.updated_at.strftime('%B %d, %Y at %I:%M %p') }}</p>
+                        <p>{{ course.updated_at | user_timezone }}</p>
                     </div>
                 </div>
                 

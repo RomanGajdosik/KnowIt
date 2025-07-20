@@ -32,7 +32,7 @@
                                     <td><strong>{{ course.title }}</strong></td>
                                     <td>{{ course.description[:100] + '...' if course.description and course.description|length > 100 else course.description or 'No description' }}</td>
                                     <td>{{ course.created_by_user.fullname or course.created_by_user.username }}</td>
-                                    <td>{{ course.created_at.strftime('%m/%d/%Y') }}</td>
+                                    <td>{{ course.created_at | user_timezone('%m/%d/%Y') }}</td>
                                     <td>
                                         {% if course.id in enrolled_course_ids %}
                                             <span class="badge bg-success">Enrolled</span>
@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <p class="card-text">
                                 <small class="text-muted">By: {{ course.created_by_user.fullname or course.created_by_user.username }}</small><br>
-                                <small class="text-muted">Created: {{ course.created_at.strftime('%m/%d/%Y') }}</small>
+                                <small class="text-muted">Created: {{ course.created_at | user_timezone('%m/%d/%Y') }}</small>
                             </p>
                             {% if course.description %}
                             <p class="card-text">{{ course.description[:100] + '...' if course.description|length > 100 else course.description }}</p>
