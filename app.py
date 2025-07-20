@@ -33,6 +33,19 @@ def load_user(user_id):
 
 @app.route('/')
 def index():
+    if current_user.is_authenticated and current_user.role == 'student':
+        # Show available courses for students
+        courses = Courses.query.join(Users, Courses.created_by == Users.id)\
+                              .filter(Users.role.in_(['teacher', 'admin']))\
+                              .order_by(Courses.created_at.desc()).all()
+        enrolled_course_ids = [course.id for course in current_user.enrolled_courses]
+        return render_template('index.html', courses=courses, enrolled_course_ids=enrolled_course_ids, is_student=True)
+    elif current_user.is_authenticated and current_user.role in ['teacher']:
+        # Show courses created by the teacher
+        courses = Courses.query.filter_by(created_by=current_user.id).order_by(Courses.created_at.desc()).all()
+        return render_template('index.html', courses=courses, is_teacher=True)
+    elif current_user.is_authenticated and current_user.role == 'admin':
+        return redirect(url_for('admin'))
     return render_template('index.html')
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -333,6 +346,10 @@ def unenroll_course(course_id):
         db.session.commit()
     
     return redirect(url_for('browse_courses'))
+
+@app.route('/faq')
+def faq():
+    return render_template('faq.html')
 
 if __name__ == '__main__':
     app.run()
