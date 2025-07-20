@@ -13,12 +13,19 @@
         .navbar, .footer {
             background-color: #ae0054;
         }
-        .navbar-brand, .nav-link, .footer {
+        .navbar-brand {
+            color: #000000;
+            font-weight: bolder;
+            text-shadow: 2px 2px 4px #888;
+            
+        }
+        .nav-link, .footer {
             color: #000000 !important;
             font-weight: bolder;
             text-shadow: 2px 2px 4px #888;
             
         }
+
         .btn-purple {
             background-color: #ae0054;
             color: #fff;
@@ -33,7 +40,11 @@
     <!-- Header -->
     <nav class="navbar navbar-dark" style="background-color: #ae0054;">
         <div class="container-fluid">
-            <h1 class="navbar-brand mx-auto text-center mb-0" style="width:100%; font-size:2.5rem;">Know It</h1>
+            <a href="/" class="navbar-brand mx-auto text-center mb-0" style="width:100%; font-size:2.5rem; text-decoration: none; transition: color 0.2s;" title="return/home"
+                onmouseover="this.style.color='#001aae';" 
+                onmouseout="this.style.color='#000';">
+                 Know It 
+            </a>
             <button class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Toggle sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -48,7 +59,7 @@
         </div>
         <div class="offcanvas-body p-0">
             <div class="p-3">
-                {% if current_user.role == "admin" %}
+                <!-- {% if current_user.role == "admin" %}
                 <div class="mb-3" id="admin">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -58,8 +69,9 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}
-                <!-- {% if current_user.role == 'teacher' or current_user.role =='admin' %}
+                {% endif %} -->
+                {% if current_user.is_authenticated %}                
+                {% if current_user.role == 'teacher' %}
                 <div class="mb-3" id="add-content">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -69,8 +81,7 @@
                         </div>
                     </div>
                 </div>
-                {% endif %}                -->
-                {% if current_user.is_authenticated %}
+                {% endif %}                
                 {% if current_user.role == 'student' %}
                 <div class="mb-3" id="browse-courses">
                     <div class="card shadow-sm">
@@ -82,6 +93,7 @@
                     </div>
                 </div>
                 {% endif %}
+                {% if current_user.role !='admin' %}
                 <div class="mb-3" id="my-courses">
                     <div class="card shadow-sm">
                         <div class="card-body">
@@ -97,13 +109,14 @@
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 <div class="mb-3" id="logout">
                     <div class="card shadow-sm">
                         <div class="card-body">                            
                             <form method="POST" action="/logout">                                
                                 <button type="submit" class="btn btn-purple w-100">Logout</button>
                                 <p class="text-center mb-2" style="color:#ae0054; font-weight:bold; text-shadow:2px 2px 4px #888;">
-                                     Logged as {{ current_user.username|capitalize }}
+                                     Logged as {{ current_user.username|capitalize }} [{{ current_user.role|capitalize }}]
                                 </p>
                             </form>
                         </div>
@@ -127,7 +140,7 @@
                             <a href="/login" class="btn btn-purple w-100">Login</a>
                         </div>
                     </div>
-                </div>
+                </div>                
                 {% endif %}               
             </div>
         </div>
@@ -140,32 +153,40 @@
             <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="min-height: 100vh; background-color: #f3e6ff;">
                 <div class="position-sticky pt-3">
                     <ul class="nav flex-column">
-                        {% if current_user.role == 'admin' %}
+                        {% if current_user.is_authenticated %}
+                        
+                        <!-- {% if current_user.role == 'admin' %}
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="/admin">Admin Panel</a>
                         </li>
-                        {% endif %}
-                        <!-- {% if current_user.role == 'teacher' %}
+                        {% endif %} -->
+                        
+                        {% if current_user.role == 'teacher' %}
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="/add-content">Add Content</a>
-                        </li>
-                        {% endif %} -->
-                        {% if current_user.is_authenticated %}
-                        {% if current_user.role == 'student' %}
-                        <li class="nav-item mb-2">
-                            <a class="nav-link btn btn-purple w-100" href="/browse-courses">Browse Courses</a>
-                        </li>
-                        {% endif %}
+                        </li>     
                         <li class="nav-item mb-2">
                             <a class="nav-link btn btn-purple w-100" href="/my-courses">
                                 {% if current_user.role == 'student' %}My Enrolled Courses{% else %}My Courses{% endif %}
                             </a>
-                        </li>                 
+                        </li>               
+                        {% endif %}                  
+                        {% if current_user.role == 'student' %}
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/browse-courses">Browse Courses</a>
+                        </li>
+                        
+                        <li class="nav-item mb-2">
+                            <a class="nav-link btn btn-purple w-100" href="/my-courses">
+                                {% if current_user.role == 'student' %}My Enrolled Courses{% else %}My Courses{% endif %}
+                            </a>
+                        </li>                         
+                        {% endif %}                 
                         <li class="nav-item mb-2">
                             <form method="POST" action="/logout">                                
                                 <button type="submit" class="nav-link btn btn-purple w-100">Logout</button>
                                 <p class="text-center mb-2" style="color:#ae0054; font-weight:bold; text-shadow:2px 2px 4px #888;">
-                                    Logged as {{ current_user.username|capitalize }}
+                                    Logged as {{ current_user.username|capitalize }} [{{current_user.role|capitalize}}]
                                 </p>
                             </form>
                         </li>
@@ -194,9 +215,9 @@
                                     <div class="col-md-6 col-lg-4 mb-4">
                                         <div class="card shadow-sm h-100">
                                             <div class="card-body d-flex flex-column">
-                                                <h5 class="card-title" style="color:#5a379e;">{{ course.title }}</h5>
+                                                <h5 class="card-title" style="color:#04010a;">{{ course.title }}</h5>
                                                 <p class="card-text flex-grow-1">{{ course.description }}</p>
-                                                <a href="/courses/{{ course.id }}" class="btn btn-purple mt-2">Go to Course</a>
+                                                <a href="{{ url_for('view_course', course_id=course.id) }}" class="btn btn-purple mt-2">Go to Course</a>
                                             </div>
                                         </div>
                                     </div>
@@ -224,10 +245,10 @@
                     <span>&copy; 2025 KnowIt. All rights reserved.</span>
                 </div>
                 <div class="col-md-4 mb-2 mb-md-0">
-                    <a href="#about" class="text-white">About Us</a>
+                    <a href="#about" class="text-black">About Us</a>
                 </div>
                 <div class="col-md-4">
-                    <a href="#faq" class="text-white">FAQ</a>
+                    <a href="{{ url_for('faq') }}" class="text-black">FAQ</a>
                 </div>
             </div>
         </div>
