@@ -229,15 +229,72 @@
                     </div>
                 </div>
 
-                <!-- Troubleshooting -->
+                <!-- Timezone Selection -->
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingSeven">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            <i class="fas fa-clock me-3" style="color:#ae0054;"></i>
+                            <strong>How do I change my timezone?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>The KnowIt platform displays all dates and times in your selected timezone for a personalized experience.</p>
+                            
+                            <h5 class="text-secondary">To change your timezone:</h5>
+                            <ol class="mb-3">
+                                <li>Look at the <strong>bottom of any page</strong> - you'll find the timezone selector in the footer</li>
+                                <li>Click on the <strong>timezone dropdown menu</strong></li>
+                                <li>Select your preferred timezone from the list of common timezones</li>
+                                <li>Your selection will be <strong>automatically saved</strong> and applied immediately</li>
+                                <li>All timestamps on the platform will now display in your selected timezone</li>
+                            </ol>
+
+                            <h5 class="text-secondary">Available Timezones:</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <ul class="mb-3">
+                                        <li>UTC (Coordinated Universal Time)</li>
+                                        <li>US/Eastern (New York)</li>
+                                        <li>US/Central (Chicago)</li>
+                                        <li>US/Mountain (Denver)</li>
+                                        <li>US/Pacific (Los Angeles)</li>
+                                        <li>Europe/London</li>
+                                        <li>Europe/Paris</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul class="mb-3">
+                                        <li>Europe/Berlin</li>
+                                        <li>Europe/Rome</li>
+                                        <li>Asia/Tokyo</li>
+                                        <li>Asia/Shanghai</li>
+                                        <li>Asia/Kolkata</li>
+                                        <li>Australia/Sydney</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> <strong>Note:</strong> Your timezone preference is saved for your session and will persist while you're logged in. All course creation dates, enrollment dates, and other timestamps will automatically adjust to your selected timezone.
+                            </div>
+
+                            <div class="alert alert-success">
+                                <i class="fas fa-globe"></i> <strong>Tip:</strong> If you travel frequently or work with teams across different time zones, you can easily switch your timezone setting at any time using the footer selector!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingEight">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
                             <i class="fas fa-tools me-3" style="color:#ae0054;"></i>
                             <strong>Troubleshooting common issues</strong>
                         </button>
                     </h2>
-                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                    <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#faqAccordion">
                         <div class="accordion-body">
                             <h5 class="text-secondary">Can't login?</h5>
                             <ul class="mb-3">
@@ -257,6 +314,14 @@
                                 <li>Make sure you're logged in as a Student</li>
                                 <li>Check if you're already enrolled in the course</li>
                                 <li>Try refreshing the page</li>
+                            </ul>
+
+                            <h5 class="text-secondary">Timezone not changing?</h5>
+                            <ul class="mb-3">
+                                <li>Make sure you selected a timezone from the dropdown in the footer</li>
+                                <li>Refresh the page to see the changes</li>
+                                <li>Check if JavaScript is enabled in your browser</li>
+                                <li>Clear your browser cache if times still appear incorrect</li>
                             </ul>
 
                             <h5 class="text-secondary">Page not loading properly?</h5>
