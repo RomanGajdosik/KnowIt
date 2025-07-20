@@ -76,6 +76,16 @@
         .footer {
             margin-top: auto;
             background-color: #ae0054 !important;
+        }
+
+        /* Ensure full-width headers and footers */
+        .navbar, .footer {
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
         }       
     </style>
 </head>
@@ -123,9 +133,9 @@
                             <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
                         </form>
                     </div>
-                    <div class="col-auto mb-1">
+                    <div class="col-auto mb-1 ms-auto">
                         <span class="text-white small" style="font-weight:bold; text-shadow:1px 1px 2px #000; line-height: 31px;">
-                            {{ current_user.username|capitalize }} [{{current_user.role|capitalize}}]
+                            Role: [{{current_user.role|capitalize}}]
                         </span>
                     </div>
                     {% else %}
@@ -268,7 +278,7 @@
 
     <!-- Footer -->
     <footer class="footer py-4">
-        <div class="container">
+        <div class="container-fluid">
             <div class="row align-items-center">                
                 <div class="col-md-3 mb-2 mb-md-0">
                     <a href="#about" class="text-black">About Us</a>
