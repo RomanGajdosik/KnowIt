@@ -1,0 +1,321 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="text-center mb-5">
+                <h1 style="color:#ae0054;">
+                    <i class="fas fa-question-circle"></i> Frequently Asked Questions
+                </h1>
+                <p class="lead text-muted">Find answers to common questions about using the KnowIt learning platform</p>
+            </div>
+
+            <!-- FAQ Accordion -->
+            <div class="accordion" id="faqAccordion">
+                
+                <!-- Account Creation -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                            <i class="fas fa-user-plus me-3" style="color:#ae0054;"></i>
+                            <strong>How do I create an account?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <ol class="mb-3">
+                                <li>Click the <strong>"Register"</strong> button in the navigation menu (sidebar or hamburger menu on mobile)</li>
+                                <li>Fill out the registration form with:
+                                    <ul class="mt-2">
+                                        <li><strong>Full Name:</strong> Your complete name</li>
+                                        <li><strong>Username:</strong> Choose a unique username</li>
+                                        <li><strong>Email:</strong> A valid email address</li>
+                                        <li><strong>Phone Number:</strong> Your contact number (optional)</li>
+                                        <li><strong>Password:</strong> A secure password</li>
+                                    </ul>
+                                </li>
+                                <li>Click <strong>"Register"</strong> to create your account</li>
+                                <li>You'll be automatically logged in and redirected to the homepage</li>
+                            </ol>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> <strong>Note:</strong> All new accounts are created with "Student" role by default. Contact an administrator to change your role to Teacher.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login/Logout -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingTwo">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                            <i class="fas fa-sign-in-alt me-3" style="color:#ae0054;"></i>
+                            <strong>How do I login and logout?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h5 class="text-secondary">To Login:</h5>
+                            <ol class="mb-3">
+                                <li>Click the <strong>"Login"</strong> button in the navigation menu</li>
+                                <li>Enter your <strong>username</strong> and <strong>password</strong></li>
+                                <li>Click <strong>"Login"</strong> to access your account</li>
+                                <li>You'll be redirected to the homepage with your personalized dashboard</li>
+                            </ol>
+                            
+                            <h5 class="text-secondary">To Logout:</h5>
+                            <ol class="mb-3">
+                                <li>When logged in, you'll see a <strong>"Logout"</strong> button in the navigation menu</li>
+                                <li>Click the <strong>"Logout"</strong> button</li>
+                                <li>You'll be logged out and redirected to the homepage</li>
+                            </ol>
+                            
+                            <div class="alert alert-success">
+                                <i class="fas fa-shield-alt"></i> <strong>Security Tip:</strong> Always logout when using shared computers or when you're done with your session.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingThree">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            <i class="fas fa-home me-3" style="color:#ae0054;"></i>
+                            <strong>How do I get to the home page?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>There are several ways to return to the home page:</p>
+                            <ul class="mb-3">
+                                <li><strong>Click the "Know It" logo</strong> in the top navigation bar - this works from any page</li>
+                                <li><strong>Use your browser's back button</strong> to navigate back through your browsing history</li>
+                                <li><strong>Type the homepage URL</strong> directly in your browser address bar</li>
+                            </ul>
+                            
+                            <div class="alert alert-primary">
+                                <i class="fas fa-lightbulb"></i> <strong>Quick Tip:</strong> The "Know It" logo in the header changes color when you hover over it and always takes you back to the home page!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Enrollment -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFour">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                            <i class="fas fa-graduation-cap me-3" style="color:#ae0054;"></i>
+                            <strong>How do I enroll in courses?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p><strong>For Students:</strong></p>
+                            <ol class="mb-4">
+                                <li>Login to your student account</li>
+                                <li>Click <strong>"Browse Courses"</strong> in the navigation menu</li>
+                                <li>Browse through the available courses created by teachers and admins</li>
+                                <li>Click <strong>"View"</strong> on any course you're interested in</li>
+                                <li>On the course page, click the <strong>"Enroll Now"</strong> button</li>
+                                <li>The course will appear in your <strong>"My Enrolled Courses"</strong> section</li>
+                            </ol>
+
+                            <h5 class="text-secondary">Managing Your Enrollments:</h5>
+                            <ul class="mb-3">
+                                <li><strong>View enrolled courses:</strong> Click "My Enrolled Courses" in the menu</li>
+                                <li><strong>Unenroll from a course:</strong> Click "Unenroll" button on the course page or in your courses list</li>
+                                <li><strong>Access course content:</strong> Click "View" on any enrolled course</li>
+                            </ul>
+
+                            <div class="alert alert-warning">
+                                <i class="fas fa-exclamation-triangle"></i> <strong>Note:</strong> Only students can enroll in courses. Teachers and admins create and manage courses but don't enroll in them.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Roles -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingFive">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                            <i class="fas fa-users me-3" style="color:#ae0054;"></i>
+                            <strong>What are the different user roles?</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <div class="row">
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-primary">
+                                                <i class="fas fa-user-graduate"></i> Student
+                                            </h5>
+                                            <ul class="card-text">
+                                                <li>Browse available courses</li>
+                                                <li>Enroll in courses</li>
+                                                <li>View course content</li>
+                                                <li>Manage enrollments</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-success">
+                                                <i class="fas fa-chalkboard-teacher"></i> Teacher
+                                            </h5>
+                                            <ul class="card-text">
+                                                <li>Create new courses</li>
+                                                <li>Edit their own courses</li>
+                                                <li>View enrolled students</li>
+                                                <li>All student permissions</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-danger">
+                                                <i class="fas fa-user-shield"></i> Admin
+                                            </h5>
+                                            <ul class="card-text">
+                                                <li>Manage all users</li>
+                                                <li>Edit any course</li>
+                                                <li>Change user roles</li>
+                                                <li>All platform permissions</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Course Creation -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSix">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                            <i class="fas fa-plus-circle me-3" style="color:#ae0054;"></i>
+                            <strong>How do I create a course? (Teachers/Admins)</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p><strong>For Teachers and Admins:</strong></p>
+                            <ol class="mb-3">
+                                <li>Login with your teacher or admin account</li>
+                                <li>Go to <strong>"My Courses"</strong> in the navigation menu</li>
+                                <li>Click the <strong>"Add New Course"</strong> button</li>
+                                <li>Fill out the course form:
+                                    <ul class="mt-2">
+                                        <li><strong>Title:</strong> A unique, descriptive course title</li>
+                                        <li><strong>Description:</strong> Brief overview of the course</li>
+                                        <li><strong>Content:</strong> The main course material and lessons</li>
+                                    </ul>
+                                </li>
+                                <li>Click <strong>"Create Course"</strong> to save</li>
+                                <li>Your course will be available for student enrollment</li>
+                            </ol>
+
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> <strong>Note:</strong> You need Teacher or Admin role to create courses. Contact an administrator to upgrade your account.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Troubleshooting -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingSeven">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                            <i class="fas fa-tools me-3" style="color:#ae0054;"></i>
+                            <strong>Troubleshooting common issues</strong>
+                        </button>
+                    </h2>
+                    <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <h5 class="text-secondary">Can't login?</h5>
+                            <ul class="mb-3">
+                                <li>Check your username and password for typos</li>
+                                <li>Make sure Caps Lock is off</li>
+                                <li>Clear your browser cache and try again</li>
+                            </ul>
+
+                            <h5 class="text-secondary">Don't see "Add Content" option?</h5>
+                            <ul class="mb-3">
+                                <li>Check your user role - only Teachers and Admins can create courses</li>
+                                <li>Contact an administrator to upgrade your account</li>
+                            </ul>
+
+                            <h5 class="text-secondary">Can't enroll in a course?</h5>
+                            <ul class="mb-3">
+                                <li>Make sure you're logged in as a Student</li>
+                                <li>Check if you're already enrolled in the course</li>
+                                <li>Try refreshing the page</li>
+                            </ul>
+
+                            <h5 class="text-secondary">Page not loading properly?</h5>
+                            <ul class="mb-3">
+                                <li>Refresh the page (F5 or Ctrl+R)</li>
+                                <li>Clear your browser cache</li>
+                                <li>Try using a different browser</li>
+                                <li>Check your internet connection</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Contact Support -->
+            <div class="text-center mt-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color:#ae0054;">
+                            <i class="fas fa-headset"></i> Still need help?
+                        </h5>
+                        <p class="card-text">If you can't find the answer you're looking for, contact our support team.</p>
+                        <div class="d-flex justify-content-center gap-3">
+                            <a href="mailto:support@knowit.com" class="btn btn-outline-primary">
+                                <i class="fas fa-envelope"></i> Email Support
+                            </a>
+                            <a href="{{ url_for('index') }}" class="btn btn-purple">
+                                <i class="fas fa-home"></i> Back to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+.accordion-button:not(.collapsed) {
+    background-color: #f3e6ff;
+    border-color: #ae0054;
+}
+
+.accordion-button:focus {
+    border-color: #ae0054;
+    box-shadow: 0 0 0 0.25rem rgba(174, 0, 84, 0.25);
+}
+
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ae0054'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.card-title i {
+    margin-right: 0.5rem;
+}
+</style>
+
+{% endblock %}
