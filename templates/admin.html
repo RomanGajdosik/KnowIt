@@ -111,8 +111,13 @@
                             <tr>
                                 <td>{{ content.id }}</td>
                                 <td>{{ content.title }}</td>
-                                <td>{{ content.author }}</td>
+                                <td>{{ content.created_by.fullname or content.created_by_user.username }}</td>
                                 <td>{{ content.created_at }}</td>
+                                <td>
+                                    <form method="GET" action="/edit-course/{{ content.id }}" style="display:inline;">
+                                        <button type="submit" class="btn btn-primary btn-sm">Edit</button>
+                                    </form>
+                                </td>
                                 <td>
                                     <form method="POST" action="/delete-course/{{ content.id }}" style="display:inline;">
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>
