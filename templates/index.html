@@ -86,6 +86,32 @@
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
+        }
+
+        /* QR Code styling */
+        .qr-code {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .qr-code:hover {
+            transform: scale(2.2) translate(-25%, 25%);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Responsive QR code */
+        @media (max-width: 768px) {
+            .qr-code {
+                width: 45px !important;
+                height: 45px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .qr-code {
+                width: 40px !important;
+                height: 40px !important;
+            }
         }       
     </style>
 </head>
@@ -97,7 +123,14 @@
                 onmouseover="this.style.color='#001aae';" 
                 onmouseout="this.style.color='#000';">
                  Know It 
-            </a>
+            </a>            
+            <div class="position-absolute" style="top: 10px; right: 15px;">
+                <img src="{{ url_for('static', filename='qrlink.png') }}" 
+                     alt="QR Code Link" 
+                     class="qr-code"
+                     style="width: 60px; height: 60px; border: 2px solid white; border-radius: 8px; background: white; padding: 4px;"
+                     >
+            </div>
             <button class="navbar-toggler d-block d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-label="Toggle sidebar">
                 <span class="navbar-toggler-icon"></span>
             </button>
