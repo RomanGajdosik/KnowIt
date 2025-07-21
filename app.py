@@ -360,6 +360,10 @@ def unenroll_course(course_id):
 def faq():
     return render_template('faq.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
 @app.route('/set-timezone', methods=['POST'])
 def set_timezone():
     timezone = request.form.get('timezone', 'UTC')
