@@ -202,10 +202,12 @@ def add_content():
 @app.route('/my-courses')
 @login_required
 def my_courses():
-    if current_user.role in ['teacher', 'admin']:
+    if current_user.role in ['teacher']:
         # Teachers and admins see courses they created
         courses = Courses.query.filter_by(created_by=current_user.id).order_by(Courses.created_at.desc()).all()
         return render_template('my_courses.html', courses=courses)
+    elif current_user.role == 'admin':        
+        return redirect(url_for('admin'))
     else:
         # Students see courses they're enrolled in
         enrolled_courses = current_user.enrolled_courses
@@ -217,10 +219,13 @@ def view_course(course_id):
     course = Courses.query.get_or_404(course_id)
     
     # Check access permissions based on role
-    if current_user.role in ['teacher', 'admin']:
+    if current_user.role == 'teacher':
         # Teachers/admins can view their own courses or (for admins) any course
         if course.created_by != current_user.id and current_user.role != 'admin':
             return redirect(url_for('my_courses'))
+    elif current_user.role == 'admin':
+        # Admins can view any course
+        redirect(url_for('admin'))
     else:
         # Students can only view courses they're enrolled in or browse available courses
         pass  # We'll handle this in the template

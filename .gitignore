@@ -6,3 +6,5 @@ models/__pycache__/users.cpython-312.pyc
 models/__pycache__/usersDB.cpython-312.pyc
 .env
 models/__pycache__/coursesDB.cpython-312.pyc
+migrate_timezone.py
+utils/__pycache__/timezone_utils.cpython-312.pyc
