@@ -16,6 +16,17 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html {
+            overflow-x: hidden;
+        }
+        
+        * {
+            box-sizing: border-box;
         }
         .navbar, .footer {
             background-color: #ae0054;
@@ -63,8 +74,8 @@
             background-color: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             border-radius: 15px;
-            margin: 10px;
-            z-index: 1;
+            margin: 0;
+            padding: 20px;
         }
 
         /* Footer positioning fix */
@@ -79,14 +90,9 @@
             background-color: #ae0054 !important;
         }
 
-        /* Ensure full-width headers and footers */
+        /* Remove problematic full-width positioning */
         .navbar, .footer {
-            width: 100vw;
-            position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
+            width: 100%;
         }
 
         /* QR Code styling */
@@ -115,6 +121,35 @@
             .qr-code {
                 width: 40px !important;
                 height: 40px !important;
+            }
+        }
+        
+        /* Additional responsive fixes */
+        @media (max-width: 768px) {
+            main {
+                border-radius: 10px;
+                padding: 15px;
+            }
+            
+            .container-fluid {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            main {
+                border-radius: 5px;
+                padding: 10px;
+            }
+            
+            .container-fluid {
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            
+            .navbar-brand {
+                font-size: 2rem !important;
             }
         }       
 
@@ -311,7 +346,6 @@
                 </main>
             </div>
         </div>
-    </div>
     </div>
 
     <!-- Footer -->
