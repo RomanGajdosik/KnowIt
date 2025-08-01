@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template,redirect,url_for, session, jsonify
+from flask import Flask, request, render_template,redirect,url_for, session, jsonify, Response ,flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, login_user, logout_user,UserMixin,current_user,login_required 
 from flask_bcrypt import Bcrypt
@@ -169,6 +169,7 @@ def add_content():
         title = request.form['title']
         description = request.form.get('description', '')
         content = request.form['content']
+        presentation_file = request.files.get('files')
         
         # Check if course title already exists
         existing_course = Courses.query.filter_by(title=title).first()
@@ -182,6 +183,7 @@ def add_content():
                     title=title,
                     description=description if description else None,
                     content=content,
+                    presentation_data=presentation_file.read() if presentation_file else None,  
                     created_by=current_user.id,
                     updated_by=current_user.id
                 )
@@ -381,5 +383,38 @@ def set_timezone():
     
     return redirect(request.referrer or url_for('index'))
 
+@app.route('/download-presentation/<int:course_id>')
+@login_required
+def download_presentation(course_id):
+    course = Courses.query.get_or_404(course_id)
+    
+    # Check if user has access to this course
+    if current_user.role == 'student':
+        # Students can only download if they're enrolled
+        if current_user not in course.enrolled_students:
+            flash('You must be enrolled in this course to access materials.', 'error')
+            return redirect(url_for('view_course', course_id=course_id))
+    elif current_user.role == 'teacher':
+        # Teachers can only download their own courses
+        if course.created_by != current_user.id:
+            flash('You can only access materials from your own courses.', 'error')
+            return redirect(url_for('view_course', course_id=course_id))
+    # Admins can access everything
+    
+    if not course.presentation_data:
+        flash('No presentation file available for this course.', 'error')
+        return redirect(url_for('view_course', course_id=course_id))
+    
+    # Create response with binary data
+    response = Response(
+        course.presentation_data,
+        mimetype='application/pdf',  # Assume PDF for now
+        headers={
+            'Content-Disposition': f'inline; filename="Course_{course_id}_{course.title[:20]}.pdf"'
+        }
+    )
+    
+    return response
+
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

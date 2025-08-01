@@ -6,27 +6,28 @@
         <div class="col-md-8">
             <div class="card p-4">
                 <h2 class="mb-4 text-center" style="color:#ae0054;">Add New Course</h2>
-                <form method="POST" action="/add-content">
+                <form method="POST" action="/add-content" enctype="multipart/form-data">
                     <div class="mb-3">
-                        <label for="title" class="form-label">Course Title</label>
+                        <label for="title" class="form-label"><strong>Course Title</strong></label>
                         <input type="text" class="form-control" id="title" name="title" required maxlength="150" placeholder="Enter course title">
                     </div>
                     <div class="mb-3">
-                        <label for="description" class="form-label">Course Description</label>
+                        <label for="description" class="form-label"><strong>Course Description</strong></label>
                         <textarea class="form-control" id="description" name="description" rows="6" placeholder="Enter course description (optional)"></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="content" class="form-label">Course Content</label>
+                        <label for="content" class="form-label"><strong>Course Content</strong></label>
                         <textarea class="form-control" id="content" name="content" rows="10" required placeholder="Enter the course content here..."></textarea>
                         <div class="form-text">This is the main content of your course.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="files" class="form-label"><strong>Upload presentation data</strong></label>
+                        <input type="file" class="form-control" id="files" name="files" accept=".pdf,.pptx,.ppt">
                     </div>
                     <div class="d-flex justify-content-between">
                         <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
                         <button type="submit" class="btn btn-success">Create Course</button>
-                    </div>
-                    <div class="d-flex justify-content-between">
-                        <button type="button" class="btn btn-success">Add Content</button>
-                    </div>
+                    </div>                    
                 </form>
                 
                 <!-- Success/Error Modal -->
