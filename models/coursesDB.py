@@ -17,7 +17,7 @@ class Courses(db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.utcnow())
     updated_at = db.Column(db.DateTime, default=lambda: datetime.utcnow(), onupdate=lambda: datetime.utcnow())
     created_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    presentation_data = db.Column(db.Large,nullable=True)
+    presentation_data = db.Column(db.LargeBinary, nullable=True)
     created_by_user = db.relationship('Users', foreign_keys=[created_by], backref='courses_created')
     updated_by = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=True)
     updated_by_user = db.relationship('Users', foreign_keys=[updated_by], backref='courses_updated')
